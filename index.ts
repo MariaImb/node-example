@@ -1,9 +1,11 @@
 //en typescript no usamos los require, usamos los imports. instalar los types que me pida express
 
 import express from "express";
+var cors = require('cors')
 import bodyParser from "body-parser";
 const app = express();
 
+app.use(cors())
 app.use(bodyParser.json());
 
 const product: { id: number; name: string; marca: string }[] = [
