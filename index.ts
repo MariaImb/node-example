@@ -5,14 +5,30 @@ var cors = require('cors')
 import bodyParser from "body-parser";
 const app = express();
 
+app.use(cors())
+
 app.use(bodyParser.json());
 
 const product: { id: number; name: string; marca: string; precio: number }[] = [
     {
-        name: "mouse",
-        marca: "telefe",
+        name: "Mouse",
+        marca: "Logitech",
         precio: 2000,
-        id: 213123,
+        id: 1,
+    },
+
+    {
+        name: "Teclado",
+        marca: "Logitech",
+        precio: 3000,
+        id: 2,
+    },
+
+    {
+        name: "Auricular",
+        marca: "Xiaomi",
+        precio: 4000,
+        id: 3,
     },
 ];
 
