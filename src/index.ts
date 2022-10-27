@@ -1,7 +1,7 @@
 //en typescript no usamos los require, usamos los imports. instalar los types que me pida express
 
 import express from "express";
-import {product} from "./products";
+import { product } from "./products";
 var cors = require("cors");
 import bodyParser from "body-parser";
 const app = express();
@@ -10,12 +10,11 @@ const app = express();
 app.use(cors());
 
 //para que pueda entender los objetos json cuando vienen datos de peticion post
-app.use(express.json())
+app.use(express.json());
 app.use(bodyParser.json());
 
 //para que cuando vengan datos de una peticion post pueda entender los campos que vienen desde ahi
-app.use(express.urlencoded({extended: false}))
-
+app.use(express.urlencoded({ extended: false }));
 
 app.get("/product", (req, res) => {
     res.status(200).json(product);
@@ -23,18 +22,20 @@ app.get("/product", (req, res) => {
 
 app.post("/product", (req, res) => {
     const { name, brand, price } = req.body;
-    console.log(req.body)
+    console.log(req.body);
     try {
         if (!name && !brand) throw new Error("che pasame el name y marca");
-        product.push({ id: new Date().getTime(), name, brand, price});
-        res.status(200).json(product.slice(-1));
+        product.push({ id: new Date().getTime(), name, brand, price });
+        // res.status(200).json(product.slice(-1));
+        res.status(200).json(product);
     } catch (err) {
         return res.status(400).json({ message: err.message });
     }
 });
 
-app.put("/product", (req, res) => {
-    const { name, brand, price, id } = req.body;
+app.put("/product/:id", (req, res) => {
+    const { name, brand, price } = req.body;
+    const id = Number(req.params.id);
     const index = product.findIndex((product) => product.id === id);
     if (index === -1)
         return res.status(400).json({ message: "no se encontro el producto" });
